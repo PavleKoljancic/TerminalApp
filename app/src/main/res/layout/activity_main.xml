@@ -77,7 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userImage" />
@@ -86,7 +87,8 @@
             android:id="@+id/canDriveText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="34sp"
+            android:textAlignment="center"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/UserName" />
