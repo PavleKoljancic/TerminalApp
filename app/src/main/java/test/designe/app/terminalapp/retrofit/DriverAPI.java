@@ -61,4 +61,7 @@ public interface DriverAPI {
     Call<String> closeRouteHistory(@Body RouteHistory routeHistory,@Header("Authorization") String BarerToken);
     @GET("/api/routesHistory/scanInteractionTerminalId={TerminalId}&UserId={UserId}")
     Call<String> scanCall(@Path("TerminalId") Integer terminalId,@Path("UserId") Integer userId,@Header("Authorization") String BarerToken);
+
+    @GET("/api/terminals/getIsTerminalActivationProcessed/{SerialNumber}")
+    Call<Boolean> checkIfActivationRequestIsPending(@Path("SerialNumber") String SerialNumber);
 }

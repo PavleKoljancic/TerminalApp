@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
                                     
                             }
                         });
+                builder.setCancelable(false);
                 builder.show();
 
             }

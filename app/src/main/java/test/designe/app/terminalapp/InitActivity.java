@@ -66,32 +66,21 @@ public class InitActivity extends AppCompatActivity {
                 terminal = api.getTerminalBySerialNumber(androidId).execute().body();
                 Activity thisActivity = this;
                 if(terminal.getId()==null)
-                {
-                    runOnUiThread(()-> {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                {    final boolean isPending = api.checkIfActivationRequestIsPending(androidId).execute().body();
+                    runOnUiThread(()->{
+                        if(isPending)
+                        {
+                            infoText.setText("Zahtjev za aktivaciju\n ovog terminal čeka obradu");
+                            loadingProgress.setVisibility(View.INVISIBLE);
+                            retry.setVisibility(View.VISIBLE);
+                            retry.setEnabled(true);
+                        }
+                            else {requestActivation(thisActivity);}
 
-
-                        builder.setMessage("Da li želite da pošaljete zahtjev za aktivaciju?")
-                                .setTitle("Ovaj terminal nije aktiviran");
-                        builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(thisActivity, RegisterTerminalActivity.class);
-                                startActivity(intent);
-                                thisActivity.finish();
-                            }
-                        });
-                        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                runOnUiThread(()-> {infoText.setText("Terminal nije aktiviran");
-                                    loadingProgress.setVisibility(View.INVISIBLE);
-                                    retry.setVisibility(View.VISIBLE);
-                                    retry.setEnabled(true);});
-                            }
-                        });
-
-                        builder.show();
                     });
+
+
+
 
 
                 }
@@ -126,6 +115,34 @@ public class InitActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void requestActivation(Activity thisActivity) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+
+            builder.setMessage("Da li želite da pošaljete zahtjev za aktivaciju?")
+                    .setTitle("Ovaj terminal nije aktiviran");
+            builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Intent intent = new Intent(thisActivity, RegisterTerminalActivity.class);
+                    startActivity(intent);
+                    thisActivity.finish();
+                }
+            });
+            builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    runOnUiThread(()-> {infoText.setText("Terminal nije aktiviran");
+                        loadingProgress.setVisibility(View.INVISIBLE);
+                        retry.setVisibility(View.VISIBLE);
+                        retry.setEnabled(true);});
+                }
+            });
+            builder.setCancelable(false);
+            builder.show();
+
     }
 
     @Override
