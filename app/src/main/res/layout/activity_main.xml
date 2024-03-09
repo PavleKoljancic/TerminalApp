@@ -59,18 +59,8 @@
             app:strokeColor="?colorPrimary"
 
 
-            app:strokeWidth="3dp"
+            app:strokeWidth="5dp"
             tools:src="@drawable/no_profile_picture" />
-
-        <ImageView
-            android:id="@+id/statusImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/canDriveText" />
 
         <TextView
             android:id="@+id/UserName"
@@ -78,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userImage" />
@@ -88,7 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/UserName" />
@@ -107,12 +98,11 @@
             android:id="@+id/errorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="Desila se greška pri učitavnju"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/statusImage" />
+            app:layout_constraintTop_toBottomOf="@+id/canDriveText" />
 
         <Button
             android:id="@+id/retryBtnLoadRH"
@@ -129,12 +119,13 @@
             android:id="@+id/qr_code_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Skeniraj QR kod"
+            android:layout_marginBottom="10dp"
+            android:text="Skeniraj"
+            app:icon="@drawable/qr_code"
+            app:layout_constraintBottom_toTopOf="@+id/exitButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/errorText" />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

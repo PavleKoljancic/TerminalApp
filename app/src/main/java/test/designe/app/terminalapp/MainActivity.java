@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.camera2.CameraAccessException;
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
     DriverAPI api;
 
     TextView canDriveTextView;
-    ImageView aprovalImageView;
     TextView UserNametext;
     ShapeableImageView userImage;
     TextView errorText;
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
         canDriveTextView = (TextView) findViewById(R.id.canDriveText);
         UserNametext = findViewById(R.id.UserName);
         userImage = findViewById(R.id.userImage);
-        aprovalImageView = (ImageView) findViewById(R.id.statusImage);
+
         mainProgress = (CircularProgressIndicator) findViewById(R.id.progressMain);
         scanQRBtn = (Button) findViewById(R.id.qr_code_btn);
 
@@ -234,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
 
         userImage.setVisibility(View.INVISIBLE);
         canDriveTextView.setVisibility(View.INVISIBLE);
-        aprovalImageView.setVisibility(View.INVISIBLE);
         UserNametext.setText("");
 
 
@@ -328,10 +327,11 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
         canDriveTextView.setVisibility(View.VISIBLE);
         if (response.getTicketName() != null && (!response.getTicketName().isEmpty())) {
 
-            canDriveTextView.setTextColor(Color.GREEN);
+            canDriveTextView.setTextColor(Color.parseColor("#4bae4f"));
+            userImage.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#4bae4f")));
             canDriveTextView.setText(response.getTicketName());
 
-            aprovalImageView.setImageDrawable(getResources().getDrawable(R.drawable.aproved));
+
             lastValidInteraction = response;
             lastValidPicture = pBytes;
             lastScanTime = System.currentTimeMillis();
@@ -340,12 +340,14 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
         } else {
 
             canDriveTextView.setTextColor(Color.RED);
+            canDriveTextView.setTextColor(Color.parseColor("#FF8E0409"));
+            userImage.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#FF8E0409")));
             canDriveTextView.setText("Nedovoljno kredita");
 
-            aprovalImageView.setImageDrawable(getResources().getDrawable(R.drawable.rejected));
+
 
         }
-        aprovalImageView.setVisibility(View.VISIBLE);
+
     }
 
     public void userNotFound() {
