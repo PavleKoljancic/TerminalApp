@@ -9,6 +9,8 @@ import android.os.HandlerThread;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 
 import test.designe.app.terminalapp.sigeltons.TerminalSingelton;
@@ -80,14 +82,14 @@ public class ReaderNFC implements NfcAdapter.ReaderCallback {
 
 
                     res = isoDep.transceive(selectCommandUser);
-                    //Pronalazak Usera
+
                     if (res[0] == -112 && res[1] == 0) {
                         res = isoDep.transceive(commandApduGetId);
-                        if(res.length==4) {
-                            int id = ByteBuffer.wrap(res).getInt();
+                        if(res.length>=10) {
+                            String userString = new String(res, StandardCharsets.US_ASCII);
                             isoDep.close();
                             synchronized (idReadSubscribers) {
-                                idReadSubscribers.stream().parallel().forEach(sub -> sub.onIdRead(id));
+                                idReadSubscribers.stream().parallel().forEach(sub -> sub.onUserStringRead(userString));
                             }
                         }
 
@@ -106,6 +108,7 @@ public class ReaderNFC implements NfcAdapter.ReaderCallback {
                                 isoDep.close();
                         }
                     }
+
                 } catch (IOException e) {
                     //KONEKCIJA IZGUBLJENA
                 }
@@ -144,4 +147,6 @@ public class ReaderNFC implements NfcAdapter.ReaderCallback {
             this.idReadSubscribers.remove(sub);
         }
     }
+
+
 }

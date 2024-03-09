@@ -14,6 +14,7 @@ import test.designe.app.terminalapp.models.Driver;
 import test.designe.app.terminalapp.models.PinUser;
 import test.designe.app.terminalapp.models.Route;
 import test.designe.app.terminalapp.models.RouteHistory;
+import test.designe.app.terminalapp.models.ScanInteractionResponse;
 import test.designe.app.terminalapp.models.Terminal;
 import test.designe.app.terminalapp.models.TerminalActivationRequest;
 import test.designe.app.terminalapp.models.Transporter;
@@ -59,8 +60,10 @@ public interface DriverAPI {
                                     @Header("Authorization") String BarerToken);
     @POST("/api/terminals/CloseTerminalRouteHistory")
     Call<String> closeRouteHistory(@Body RouteHistory routeHistory,@Header("Authorization") String BarerToken);
-    @GET("/api/routesHistory/scanInteractionTerminalId={TerminalId}&UserId={UserId}")
-    Call<String> scanCall(@Path("TerminalId") Integer terminalId,@Path("UserId") Integer userId,@Header("Authorization") String BarerToken);
+
+
+    @GET("/api/routesHistory/scanInteractionTerminalId={TerminalId}&UserString={UserString}")
+    Call<ScanInteractionResponse> scanCall(@Path("TerminalId") Integer terminalId, @Path("UserString") String userString, @Header("Authorization") String BarerToken);
 
     @GET("/api/terminals/getIsTerminalActivationProcessed/{SerialNumber}")
     Call<Boolean> checkIfActivationRequestIsPending(@Path("SerialNumber") String SerialNumber);
