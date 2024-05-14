@@ -65,6 +65,12 @@ public class InitActivity extends AppCompatActivity {
             try {
                 terminal = api.getTerminalBySerialNumber(androidId).execute().body();
                 Activity thisActivity = this;
+                if(terminal==null) {
+                    runOnUiThread(() -> {
+                        infoText.setText("Desila se greška pri povezivanju.");
+                    });
+                    return;
+                }
                 if(terminal.getId()==null)
                 {    final boolean isPending = api.checkIfActivationRequestIsPending(androidId).execute().body();
                     runOnUiThread(()->{

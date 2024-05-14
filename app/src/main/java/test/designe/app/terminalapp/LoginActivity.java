@@ -93,9 +93,10 @@ public class LoginActivity extends AppCompatActivity {
             if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                 TokenManager.setToken(response.body());
                final Driver driver;
-                if("DRIVER".equals(TokenManager.getInstance().getRole()))
-                 driver = api.getDriverByPIN(PIN,TokenManager.bearer() + TokenManager.getInstance().getToken()).execute().body();
-                else driver = null;
+                if("DRIVER".equals(TokenManager.getInstance().getRole())) {
+                    Response<Driver> res = api.getDriverByPIN(PIN, TokenManager.bearer() + TokenManager.getInstance().getToken()).execute();
+                    driver = res.body();
+                }else driver = null;
                 runOnUiThread(() -> {
 
                         if(driver!=null&& TerminalSingelton.getTerminal().getTransporterId()==driver.getTransporterId()) {

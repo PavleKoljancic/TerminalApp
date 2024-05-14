@@ -16,11 +16,13 @@ import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import test.designe.app.terminalapp.models.RouteHistory;
 import test.designe.app.terminalapp.models.ScanInteractionResponse;
@@ -255,10 +258,13 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
         }
         ScanInteractionResponse interactionResponse = null;
         User user=null;
+        Response<ScanInteractionResponse> responseToCall;
         try {
-            interactionResponse = api.scanCall(TerminalSingelton.getTerminal().getId(), UserString, TokenManager.bearer() + TokenManager.getInstance().getToken()).execute().body();
-        } catch (IOException e) {
+            responseToCall = api.scanCall(TerminalSingelton.getTerminal().getId(), UserString, TokenManager.bearer() + TokenManager.getInstance().getToken()).execute();
+            interactionResponse = responseToCall.body();
 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         if(interactionResponse!=null)
             user = interactionResponse.getUser();
@@ -268,8 +274,9 @@ public class MainActivity extends AppCompatActivity implements IdReadSubscriber 
         if (user != null && user.getPictureHash() != null) {
 
             try {
-                pictureBytes = api.getUserProfilePicture(user.getId(), TokenManager.bearer() + TokenManager.getInstance().getToken()).execute().body().bytes();
-
+                Response<ResponseBody> responseInner = api.getUserProfilePicture(user.getId(), TokenManager.bearer() + TokenManager.getInstance().getToken()).execute();
+                if(responseInner.isSuccessful()&&responseInner.body()!=null)
+                    pictureBytes = responseInner.body().bytes();
             } catch (IOException e) {
 
             }

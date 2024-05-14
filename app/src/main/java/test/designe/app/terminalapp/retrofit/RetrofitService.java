@@ -37,6 +37,7 @@ public class RetrofitService {
                 .addConverterFactory(new NullOnEmptyConverterFactory())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
+
                 .build();
     }
 

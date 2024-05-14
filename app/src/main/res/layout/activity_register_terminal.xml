@@ -47,10 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="e-Ticket \n Terminalska applikacija "
+        android:text="e-Ticket \n Terminalska aplikacija "
         android:textAlignment="center"
         android:textColor="#262D52"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/imageViewReg"
         app:layout_constraintTop_toTopOf="parent" />
 
